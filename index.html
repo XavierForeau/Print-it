@@ -24,17 +24,15 @@
 	<div id="banner">
 
 		<!-- Next and previous buttons -->
-		<img class="arrow arrow_left" id="left" src="assets/images/arrow_left.png" alt="arrow_left" onclick="openPrevImg()">
-		<img class="arrow arrow_right" id="right" src="assets/images/arrow_right.png" alt="arrow_right" onclick="openNextImg()">
+		<img class="arrow arrow_left" id="left" src="assets/images/arrow_left.png" alt="arrow_left" onclick="selectImg(-1)">
+		<img class="arrow arrow_right" id="right" src="assets/images/arrow_right.png" alt="arrow_right" onclick="selectImg(1)">
 
 		<img class="banner-img" id="image" src="./assets/images/slideshow/slide1.jpg" alt="Banner Print-it">
 		<p>Impressions tous formats <span>en boutique et en ligne</span></p>
 				
+		<!-- -->
+		<div id="bullet-points" class="dots"></div>
 
-		<div class="dots">
-			<div class="dot"></div>
-
-		</div>
 	</div>
 	<section id="about-us" class="container">
 		<div>

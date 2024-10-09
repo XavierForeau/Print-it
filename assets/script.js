@@ -17,55 +17,62 @@ const slides = [
 	}
 ]
 
+// Définitions
 let slideId = 0;
 let slideIdNew = 0;
 let slideMax = slides.length-1;
-let slideRep = "./assets/images/slideshow/";
-let slideImage = ""
+slideRep = "./assets/images/slideshow/";
+slideImage = ""
 
-function initDots() {
-	let dots = document.querySelector(".dots");
-	console.log("dots", dots);
-	console.log("nb dots", slideMax);
+// Affichage des bullet points
+bulletPoints = document.getElementById("bullet-points");
+for (let i = 0; i < slides.length; i++) {
+	// ajout d'autant de "div" que d'images
+	let bullet = document.createElement("div");
+	bullet.className = "dot";
+	bulletPoints.appendChild(bullet);
+	// activation du bullet courant
+	selectBullet(0,0);
 }
 
-function openPrevImg(){
-	if (slideId === 0){
-		slideIdNew = slideMax;
-	}else
-	{ 
-		slideIdNew = slideId -1;
-	}
-	console.log("id ", slideId);
-	console.log("idNew ", slideIdNew);
-	slideId =  slideIdNew;
-	slideImage = slides[slideIdNew].image;
-	console.log("slide : ",slides[slideIdNew]);
-
-	let image=document.getElementById("image");
-	image.src= slideRep+slideImage;
-
-	let tagLine = document.querySelector("#banner p");
-	console.log("tagLine", tagLine);
-
-	tagLine.setAttribute("p",slides[slideIdNew].tagLine);
-	console.log("new tagLine", tagLine);
+// Activation du bullet courant et désactivation de l'ancien
+function selectBullet(oldPos, newPos){
+	// lecture de tous les bullets
+	let listBullet = document.querySelectorAll(".dots div");
+	listBullet[oldPos].classList.remove("dot_selected");
+	listBullet[newPos].classList.add("dot_selected");
+	console.log("bullet n°",newPos+1);
 }
 
-function openNextImg(){
-	if (slideId === slideMax){
+// Affichage de l'image demandée, avec le pas de déplacement "step"
+function selectImg(step){
+
+	// calcul de la nouvelle position
+	slideIdNew = slideId + step;
+	if (slideIdNew > slideMax){
 		slideIdNew = 0;
-	}else
-	{ 
-		slideIdNew = slideId +1;
-	}
-	console.log("id ", slideId);
-	console.log("idNew ", slideIdNew);
-	slideId =  slideIdNew;
-	slideImage = slides[slideIdNew].image;
-	console.log(slides[slideIdNew]);
+	}else if (slideIdNew < 0) { 
+		slideIdNew = slideMax;
+	} 
 
-	let image=document.getElementById("image");
-	image.src= slideRep+slideImage;
+	// activation du bullet, de l'image et du texte
+	selectBullet(slideId, slideIdNew);
+	replaceImg();
+	replaceText();
+	slideId =  slideIdNew;
 }
 
+// affichage de l'image
+function replaceImg(){
+	slideImage = slides[slideIdNew].image;
+	let image=document.getElementById("image");
+	image.src= slideRep+slideImage;
+	console.log("image :",slideImage)
+}
+
+// affichage du texte
+function replaceText(){
+	let tagLine = document.querySelector("#banner p");
+	tagLine.innerHTML = slides[slideIdNew].tagLine;
+	console.log("texte ",slides[slideIdNew].tagLine);
+}
