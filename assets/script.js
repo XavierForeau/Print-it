@@ -15,15 +15,10 @@ const slides = [
 		"image":"slide4.png",
 		"tagLine":"Autocollants <span>avec découpe laser sur mesure</span>"
 	}
-]
+];
 
 // Définitions
 let slideId = 0;
-let slideIdNew = 0;
-let slideMax = slides.length-1;
-slideRep = "./assets/images/slideshow/";
-slideImage = ""
-
 
 // Affichage des bullet points
 bulletPoints = document.getElementById("bullet-points");
@@ -37,29 +32,26 @@ for (let i = 0; i < slides.length; i++) {
 }
 
 // Listener sur les flèches
-document.getElementById("leftArrow").addEventListener("click",selectPrevSlideShow);
-document.getElementById("rightArrow").addEventListener("click",selectNextSlideShow);
-function selectPrevSlideShow(){
-	selectSlideShow(-1);
-}
-function selectNextSlideShow(){
-	selectSlideShow(1);
-}
+document.getElementById("leftArrow").addEventListener("click",()=>{selectSlideShow(-1)});
+document.getElementById("rightArrow").addEventListener("click",()=>{selectSlideShow(1)});
 
 // Affichage de l'image demandée du SlideShow, avec le pas de déplacement "nextStep"
 function selectSlideShow(nextStep){
+
+	const slideIdOld = slideId;
+	const slideMax = slides.length-1;
+
 	// calcul de la nouvelle position
-	slideIdNew = slideId + nextStep;
-	if (slideIdNew > slideMax){
-		slideIdNew = 0;
-	}else if (slideIdNew < 0) { 
-		slideIdNew = slideMax;
+	slideId += nextStep;
+	if (slideId > slideMax){
+		slideId = 0;
+	}else if (slideId < 0) { 
+		slideId = slideMax;
 	} 
 	// activation du bullet, de l'image et du texte
-	selectBullet(slideId, slideIdNew);
+	selectBullet(slideIdOld, slideId);
 	replaceImg();
 	replaceText();
-	slideId =  slideIdNew;
 }
 
 // Activation du bullet courant et désactivation de l'ancien
@@ -72,15 +64,18 @@ function selectBullet(oldPos, newPos){
 }
 // affichage de l'image
 function replaceImg(){
-	slideImage = slides[slideIdNew].image;
+
+	const slideDir = "./assets/images/slideshow/";
+	
+	slideImage = slides[slideId].image;
 	let image=document.getElementById("image");
-	image.src= slideRep+slideImage;
+	image.src= slideDir+slideImage;
 	console.log("image :",slideImage)
 }
 
 // affichage du texte
 function replaceText(){
 	let tagLine = document.querySelector("#banner p");
-	tagLine.innerHTML = slides[slideIdNew].tagLine;
-	console.log("texte ",slides[slideIdNew].tagLine);
+	tagLine.innerHTML = slides[slideId].tagLine;
+	console.log("texte ",slides[slideId].tagLine);
 }
