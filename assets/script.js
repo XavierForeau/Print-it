@@ -60,22 +60,19 @@ function selectBullet(oldPos, newPos){
 	let listBullet = document.querySelectorAll(".dots div");
 	listBullet[oldPos].classList.remove("dot_selected");
 	listBullet[newPos].classList.add("dot_selected");
-	console.log("bullet n°",newPos+1);
 }
 // affichage de l'image
 function replaceImg(){
 
 	const slideDir = "./assets/images/slideshow/";
-	
-	slideImage = slides[slideId].image;
+	const slideImage = slides[slideId].image;
+
 	let image=document.getElementById("image");
 	image.src= slideDir+slideImage;
-	console.log("image :",slideImage)
 }
 
 // affichage du texte
 function replaceText(){
 	let tagLine = document.querySelector("#banner p");
 	tagLine.innerHTML = slides[slideId].tagLine;
-	console.log("texte ",slides[slideId].tagLine);
 }
